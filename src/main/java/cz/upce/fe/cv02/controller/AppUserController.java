@@ -25,7 +25,7 @@ public class AppUserController {
 
         return ResponseEntity.ok(result
                 .stream()
-                .map(AppUserController::toDto)
+                .map(AppUser::toDto)
                 .collect(Collectors.toList())
         );
     }
@@ -34,21 +34,21 @@ public class AppUserController {
     public ResponseEntity<?> findById(@PathVariable final Long id) throws ResourceNotFoundException {
         var result = appUserService.findById(id);
 
-        return ResponseEntity.ok(toDto(result));
+        return ResponseEntity.ok(result.toDto());
     }
 
     @PostMapping("")
     public ResponseEntity<AppUserResponseDtoV1> create(@RequestBody @Validated final AppUserResponseInputDtoV1 input) {
         var result = appUserService.create(toEntity(input));
 
-        return ResponseEntity.ok(toDto(result));
+        return ResponseEntity.ok(result.toDto());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<AppUserResponseDtoV1> update(@PathVariable final Long id, @RequestBody final AppUserResponseInputDtoV1 input) {
         var result = appUserService.update(toEntity(id, input));
 
-        return ResponseEntity.ok(toDto(result));
+        return ResponseEntity.ok(result.toDto());
     }
 
     @DeleteMapping("/{id}")
@@ -56,18 +56,6 @@ public class AppUserController {
         appUserService.delete(id);
 
         return ResponseEntity.noContent().build();
-    }
-
-    private static AppUserResponseDtoV1 toDto(final AppUser appUser) {
-        return new AppUserResponseDtoV1(
-                appUser.getId(),
-                appUser.getUsername(),
-                appUser.getPassword(),
-                appUser.getActive(),
-                appUser.getCreationDate(),
-                appUser.getUpdateDate(),
-                appUser.getRoles()
-        );
     }
 
     private static AppUser toEntity(final AppUserResponseInputDtoV1 input) {

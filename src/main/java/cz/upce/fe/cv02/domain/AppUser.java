@@ -1,5 +1,6 @@
 package cz.upce.fe.cv02.domain;
 
+import cz.upce.fe.cv02.dto.AppUserResponseDtoV1;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -52,5 +53,17 @@ public class AppUser {
         this.active = active;
         this.creationDate = creationDate;
         this.updateDate = updateDate;
+    }
+
+    public AppUserResponseDtoV1 toDto() {
+        return new AppUserResponseDtoV1(
+                getId(),
+                getUsername(),
+                getPassword(),
+                getActive(),
+                getCreationDate(),
+                getUpdateDate(),
+                getRoles()
+        );
     }
 }
