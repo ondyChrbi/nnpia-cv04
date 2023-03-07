@@ -2,7 +2,7 @@ package cz.upce.fe.cv02.controller;
 
 import cz.upce.fe.cv02.domain.AppUser;
 import cz.upce.fe.cv02.dto.AppUserResponseDtoV1;
-import cz.upce.fe.cv02.dto.AppUserResponseInputDtoV1;
+import cz.upce.fe.cv02.dto.AppUserInputDtoV1;
 import cz.upce.fe.cv02.service.AppUserService;
 import cz.upce.fe.cv02.service.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
@@ -38,15 +38,15 @@ public class AppUserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<AppUserResponseDtoV1> create(@RequestBody @Validated final AppUserResponseInputDtoV1 input) {
-        var result = appUserService.create(toEntity(input));
+    public ResponseEntity<AppUserResponseDtoV1> create(@RequestBody @Validated final AppUserInputDtoV1 input) {
+        var result = appUserService.create(input.toEntity());
 
         return ResponseEntity.ok(result.toDto());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AppUserResponseDtoV1> update(@PathVariable final Long id, @RequestBody final AppUserResponseInputDtoV1 input) {
-        var result = appUserService.update(toEntity(id, input));
+    public ResponseEntity<AppUserResponseDtoV1> update(@PathVariable final Long id, @RequestBody final AppUserInputDtoV1 input) {
+        var result = appUserService.update(input.toEntity(id));
 
         return ResponseEntity.ok(result.toDto());
     }
@@ -58,24 +58,4 @@ public class AppUserController {
         return ResponseEntity.noContent().build();
     }
 
-    private static AppUser toEntity(final AppUserResponseInputDtoV1 input) {
-        return new AppUser(
-                input.getUsername(),
-                input.getPassword(),
-                input.getActive(),
-                input.getCreationDate(),
-                input.getUpdateDate()
-        );
-    }
-
-    private static AppUser toEntity(final Long id, final AppUserResponseInputDtoV1 input) {
-        return new AppUser(
-                id,
-                input.getUsername(),
-                input.getPassword(),
-                input.getActive(),
-                input.getCreationDate(),
-                input.getUpdateDate()
-        );
-    }
 }
