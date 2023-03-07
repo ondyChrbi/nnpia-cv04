@@ -2,6 +2,10 @@ type Query {
     appUser(id: ID!): AppUser!
 }
 
+type Mutation {
+    createAppUser(appUser: AppUserInput!): AppUser!
+}
+
 type AppUser {
     id : ID!,
     username: String!,
@@ -9,6 +13,14 @@ type AppUser {
     creationDate: String!,
     updateDate: String,
     tasks: [Task!]!
+}
+
+input AppUserInput {
+    username: String!,
+    password: String!
+    active: Boolean!,
+    creationDate: String!,
+    updateDate: String
 }
 
 type Task {
