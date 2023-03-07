@@ -7,5 +7,14 @@ type AppUser {
     username: String!,
     active: Boolean!,
     creationDate: String!,
-    updateDate: String
+    updateDate: String,
+    tasks: [Task!]!
+}
+
+type Task {
+    id: ID!,
+    title: String!
+    description: String!,
+    creationDate: String!,
+    updateDate: String!
 }
