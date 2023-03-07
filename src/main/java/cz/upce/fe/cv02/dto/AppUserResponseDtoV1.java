@@ -26,4 +26,16 @@ public class AppUserResponseDtoV1 {
     private LocalDateTime updateDate;
     
     private List<Role> roles = Collections.emptyList();
+
+    private List<TaskDtoV1> tasks = Collections.emptyList();
+
+    public AppUserResponseDtoV1(Long id, String username, String password, Boolean active, LocalDateTime creationDate, LocalDateTime updateDate, List<Role> roles) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.active = active;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+        this.roles = roles;
+    }
 }
